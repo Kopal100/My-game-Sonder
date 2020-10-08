@@ -1,5 +1,6 @@
 var player, street, img;
 var obstaclesGroup, goodGroup;
+var timer;
 
 var score = 0;
 //game states
@@ -10,9 +11,13 @@ var gameState = PLAY;
 let music;
 
 function preload(){
-  music = createAudio("music.mp3");
+  //music = loadSound("MyMusic.mp3");
+  music = createAudio("MyMusic.mp3");
 
-  img = loadImage("2.png");
+  img = loadImage("BG .jpg");
+   
+  //fontItalic = loadFont('assets/Italic.ttf');
+
   obstacle1 = loadImage("virus.png");
   obstacle2 = loadImage("nomoney.png");
 
@@ -30,20 +35,22 @@ function setup() {
   
   createCanvas(500,700);
   //music.loop()
- // music = loadSound("music.mp3");
+ // music = loadSound("MyMusic.mp3");
 
   street = createSprite(900,700)
   street.addImage("background picture",img);
+  street.scale = 2
   street.velocity = 10
-  street.scale = 10
- 
-  
+  //street.scale = 10
+  timer = 5500;
+  //console.log(timer)
   //creating groups
   obstaclesGroup = new Group;
   goodGroup = new Group;
   
+
   player = createSprite(200, 500, 40 ,40);
-  
+  player.shapeColor = "black";
   
   music.autoplay(true);
 }
@@ -57,45 +64,73 @@ function draw() {
  //playerABC.scale = 0.2
 
  music.play();
+ 
+
   if (street.y < 0){
     street.y = street.width/2;
   }
 
-
   
-  if(goodGroup.isTouching(player)){
+  if(gameState === PLAY && timer > 0){
+
+    spawnObstacles();
+    spawnGoods()
+
+    if(goodGroup.isTouching(player)){
     score = score + Math.round(getFrameRate()/60); 
-     
   }
 
-  if(obstaclesGroup.isTouching(player)){
+    if(obstaclesGroup.isTouching(player)){
     score = score - Math.round(getFrameRate()/60); 
      
   }
-  
+timer = timer-1;
+
+
+if(timer === 0){
+  gameState = END;
+}
+
+//if( gameState)
+}
 //camera.position.x = player.x;
  // camera.position.y = player.y;
   //console.log(player.y)
 
-spawnObstacles();
-spawnGoods()
+
 
  
+  //console.log(player.depth)
   
   
   drawSprites();
   textSize(20)
   textFont()
   fill("black")
-  text("Score: "+ score, 400,50);
+  text("Score: "+ score, 380,50);
  
+  //textFont(fontItalic)
+  text("CLICK TO START MUSIC", 10,30);
+  text("[collect the good items]", 20,50);
+
+
+  if(gameState === END){
+  
+text("You scored " +score + " out of 500",130, 200 )
+
+  }
+
+  
 }
 
 //spawning objects
 function spawnObstacles() {
-  if(frameCount % 5 === 0) {
+  if(frameCount % 8=== 0) {
     var obstacle = createSprite(Math.round(random(1,449)), -5);
-   
+    //console.log(obstacle.depth)
+
+obstacle.depth = player.depth -1;
+
     obstacle.scale = 0.15;
     obstacle.setVelocity(0,10);
     //generate random obstacles
