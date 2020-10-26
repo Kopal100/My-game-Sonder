@@ -15,7 +15,7 @@ function preload(){
   //music = loadSound("MyMusic.mp3");
   music = createAudio("MyMusic.mp3");
 
-  img = loadImage("BG .jpg");
+  img = loadImage("BG.jpg");
    
   //fontItalic = loadFont('assets/Italic.ttf');
 
