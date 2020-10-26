@@ -6,7 +6,8 @@ var score = 0;
 //game states
 var PLAY = 1;
 var END = 0;
-var gameState = PLAY;
+var Start = 3;
+var gameState = Start;
 
 let music;
 
@@ -33,6 +34,7 @@ function preload(){
 
 function setup() {
   
+
   createCanvas(500,700);
   //music.loop()
  // music = loadSound("MyMusic.mp3");
@@ -70,9 +72,11 @@ function draw() {
     street.y = street.width/2;
   }
 
+
   
   if(gameState === PLAY && timer > 0){
 
+   
     spawnObstacles();
     spawnGoods()
 
@@ -108,20 +112,45 @@ if(timer === 0){
   textFont()
   fill("black")
   text("Score: "+ score, 380,50);
+
+  if(gameState === Start){
+
+    text("Welcome to my game called 'SONDER'!!",70,150)
+    text("Press 'UP' arrow to start.", 140,230)
+    text("RULES:-", 60,300)
+    text("~ Collect the foods, masks and smilies.",60,330)
+    text("~ Dodge the virus and sadness to prevent",60,360)
+    text("loss of points.",80,380)
+text("~ Earn maximum points and wait till the end",60,410)
+text("for a revelation!",80,430)
+
+
+
+    if(keyIsDown(UP_ARROW)){
+      gameState = PLAY;
+    }
+  }
  
   //textFont(fontItalic)
-  text("CLICK TO START MUSIC", 10,30);
-  text("[collect the good items]", 20,50);
+  
 
 
   if(gameState === END){
   
-text("You scored " +score + " out of 500",130, 200 )
+text("You scored " +score + " out of 300!",130, 200 )
+text("But hold on! This game is the game of life", 70,250)
+text("for many people during this pandemic.",80,280)
+text("Now we know where we stand.",110,310)
+text("Reflect, and DONATE. ", 150,400)
 
+text("Created by: Kopal Kumar",250,650)
+//text("But hold on, this game is the game of life for a many people")
   }
 
   
-}
+}//end 
+
+
 
 //spawning objects
 function spawnObstacles() {
