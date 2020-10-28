@@ -126,8 +126,9 @@ text("for a revelation!",80,430)
 
 
 
-    if(keyIsDown(UP_ARROW)){
+    if(keyIsDown(UP_ARROW)|| touches.length > 0 ){
       gameState = PLAY;
+      touches = [];
     }
   }
  
